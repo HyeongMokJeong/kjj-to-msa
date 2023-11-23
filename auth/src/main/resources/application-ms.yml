@@ -1,4 +1,0 @@
-micro-service:
-  kjj:
-    api: http://localhost:8081
-    menu: http://localhost:8082

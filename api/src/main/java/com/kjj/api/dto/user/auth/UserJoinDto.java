@@ -1,4 +1,4 @@
-package com.kjj.api.dto.user.user;
+package com.kjj.api.dto.user.auth;
 
 import com.kjj.api.entity.user.User;
 import lombok.AllArgsConstructor;
