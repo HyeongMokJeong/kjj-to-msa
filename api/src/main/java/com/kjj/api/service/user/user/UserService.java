@@ -1,6 +1,7 @@
 package com.kjj.api.service.user.user;
 
 import com.kjj.api.auth.login.userDetails.UserDetailsInterface;
+import com.kjj.api.dto.user.auth.UserJoinDto;
 import com.kjj.api.dto.user.auth.WithdrawDto;
 import com.kjj.api.dto.user.info.UserInfoDto;
 import com.kjj.api.dto.user.user.*;

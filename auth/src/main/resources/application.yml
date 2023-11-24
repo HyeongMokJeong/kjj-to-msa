@@ -1,7 +1,7 @@
 # env
 spring:
   profiles:
-    include: db, dbAuth, slack, monitor, ms
+    include: db, dbAuth, slack, monitor
 
   application:
     name: kjj-auth
@@ -25,6 +25,9 @@ spring:
 jasypt:
   encryptor:
     bean: jasypt
+
+server:
+  port: 50001
 ---
 spring:
   config:

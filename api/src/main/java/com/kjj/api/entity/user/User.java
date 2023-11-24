@@ -1,6 +1,6 @@
 package com.kjj.api.entity.user;
 
-import com.kjj.api.dto.user.user.UserJoinDto;
+import com.kjj.api.dto.user.auth.UserJoinDto;
 import com.kjj.api.entity.order.Order;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

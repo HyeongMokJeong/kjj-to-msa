@@ -1,7 +1,7 @@
 package com.kjj.api.service.user.sso;
 
 import com.kjj.api.dto.user.info.UserInfoDto;
-import com.kjj.api.dto.user.user.UserJoinDto;
+import com.kjj.api.dto.user.auth.UserJoinDto;
 import com.kjj.api.entity.user.User;
 import com.kjj.api.exception.exceptions.CantFindByIdException;
 import com.kjj.api.exception.exceptions.CantFindByUsernameException;

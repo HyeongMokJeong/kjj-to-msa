@@ -10,3 +10,7 @@ management:
   endpoint:
     health:
       enabled: true
+
+my:
+  actuator:
+    path: ENC(3aT/vVhONgwb9fUNyYcql3dB4otCYZzQvCWi4j5GLjE=)

@@ -33,7 +33,7 @@ jasypt:
     bean: jasypt
 
 server:
-  port: 8081
+  port: 50000
 ---
 spring:
   config:

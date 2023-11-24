@@ -1,4 +1,4 @@
-package com.kjj.auth.tool;
+package com.kjj.noauth.util;
 
 import com.slack.api.Slack;
 import com.slack.api.model.Attachment;
