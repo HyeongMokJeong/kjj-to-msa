@@ -1,0 +1,4 @@
+my:
+  client:
+    user:
+      host: http://localhost:50001

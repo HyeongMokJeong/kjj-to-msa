@@ -3,7 +3,7 @@ package com.kjj.noauth.util.jwt;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.TokenExpiredException;
-import com.kjj.noauth.entity.User;
+import com.kjj.noauth.dto.user.UserDto;
 import com.kjj.noauth.exception.JwtRefreshException;
 import org.springframework.stereotype.Component;
 
@@ -17,23 +17,23 @@ public class JwtTools {
     private final JwtTemplate jwtTemplate = new JwtTemplate();
     private static final String USERNAME = "username";
 
-    public String createToken(User user) {
+    public String createToken(UserDto userDto) {
         LocalDateTime localDateTime = LocalDateTime.now().plusMinutes(jwtTemplate.getExpiration());
         return JWT.create()
                 .withSubject(jwtTemplate.getTokenPrefix())
                 .withExpiresAt(Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant()))
-                .withClaim("id", user.getId())
-                .withClaim(USERNAME, user.getUsername())
-                .withClaim("roles", user.getRoles())
+                .withClaim("id", userDto.getId())
+                .withClaim(USERNAME, userDto.getUsername())
+                .withClaim("roles", userDto.getRoles())
                 .sign(Algorithm.HMAC256(jwtTemplate.getSecret()));
     }
 
-    public String createRefreshToken(User user) {
+    public String createRefreshToken(UserDto userDto) {
         LocalDateTime localDateTime = LocalDateTime.now().plusDays(jwtTemplate.getExpiration());
         return JWT.create()
                 .withSubject(jwtTemplate.getTokenPrefix())
                 .withExpiresAt(Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant()))
-                .withClaim(USERNAME, user.getUsername())
+                .withClaim(USERNAME, userDto.getUsername())
                 .withClaim("type", jwtTemplate.getRefreshType())
                 .sign(Algorithm.HMAC256(jwtTemplate.getSecret()));
     }

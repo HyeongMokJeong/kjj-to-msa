@@ -1,10 +1,8 @@
 package com.kjj.noauth.dto.user;
 
-import com.kjj.noauth.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Data
 @AllArgsConstructor
@@ -13,15 +11,11 @@ public class JoinDto {
     private String username;
     private String password;
 
-    public static JoinDto from(User user) {
+    public static JoinDto from(UserDto userDto) {
         return new JoinDto(
-                user.getUsername(),
-                user.getPassword()
+                userDto.getUsername(),
+                userDto.getPassword()
         );
-    }
-
-    public void setEncodePassword(BCryptPasswordEncoder bCryptPasswordEncoder) {
-        password = bCryptPasswordEncoder.encode(password);
     }
 
     public boolean checkForm() {

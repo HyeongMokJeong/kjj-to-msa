@@ -1,6 +1,5 @@
 package com.kjj.noauth.dto.user;
 
-import com.kjj.noauth.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -10,10 +9,10 @@ public class UserInfoDto {
     private Long id;
     private String username;
 
-    public static UserInfoDto from(User user) {
+    public static UserInfoDto from(UserDto userDto) {
         return new UserInfoDto(
-                user.getId(),
-                user.getUsername()
+                userDto.getId(),
+                userDto.getUsername()
         );
     }
 

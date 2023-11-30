@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class MenuCacheWarmUpServiceImpl implements CacheWarmUpService{
+public class MenuCacheWarmUpServiceImpl implements CacheWarmUpService {
 
     private final MenuServiceImplV1 menuService;
     private final CacheManager cacheManager;

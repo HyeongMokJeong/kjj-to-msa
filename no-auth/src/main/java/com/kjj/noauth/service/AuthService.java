@@ -4,7 +4,7 @@ import com.kjj.noauth.dto.jwt.TokenRefreshResponseDto;
 import com.kjj.noauth.dto.keycloak.KeycloakUserInfoDto;
 import com.kjj.noauth.dto.user.LoginDto;
 import com.kjj.noauth.dto.user.UserInfoDto;
-import com.kjj.noauth.entity.User;
+import com.kjj.noauth.dto.user.UserDto;
 import com.kjj.noauth.exception.CantFindByUsernameException;
 import com.kjj.noauth.exception.JwtRefreshException;
 import com.kjj.noauth.util.HttpTools;
@@ -28,22 +28,22 @@ public class AuthService {
         else if (!jwtTools.getTypeFromRefreshToken(refreshToken).equals(jwtTemplate.getRefreshType())) throw new JwtRefreshException("토큰 형식이 잘못되었습니다.");
 
         String username = jwtTools.getUsernameFromRefreshToken(refreshToken);
-        User user = userService.loadUserByUsername(username);
+        UserDto userDto = userService.loadUserByUsername(username);
 
-        httpTools.setTokenToHttpServletResponse(response, user);
+        httpTools.setTokenToHttpServletResponse(response, userDto);
 
         return TokenRefreshResponseDto.refreshSuccess();
     }
 
     public UserInfoDto defaultLogin(HttpServletResponse response, LoginDto dto) {
-        User user = userService.loadUserByUsername(dto.getUsername());
-        if (user == null) throw new CantFindByUsernameException("""
+        UserDto userDto = userService.loadUserByUsername(dto.getUsername());
+        if (userDto == null) throw new CantFindByUsernameException("""
                 해당 username을 가진 유저를 찾을 수 없습니다.
                 username : """ + dto.getUsername());
 
-        httpTools.setTokenToHttpServletResponse(response, user);
+        httpTools.setTokenToHttpServletResponse(response, userDto);
 
-        return UserInfoDto.from(user);
+        return UserInfoDto.from(userDto);
     }
 
     public UserInfoDto keycloakLogin(HttpServletResponse response, String keycloakToken) {
@@ -51,11 +51,11 @@ public class AuthService {
         String sub = keycloakService.generateUsernameFromSub(keycloakUserInfo);
         String roles = keycloakService.checkKeycloakUserRoles(keycloakUserInfo);
 
-        User user = userService.loadUserByUsername(sub);
-        if (user == null) user = userService.joinKeycloak(sub, roles);
+        UserDto userDto = userService.loadUserByUsername(sub);
+        if (userDto == null) userDto = userService.joinKeycloak(sub, roles);
 
-        httpTools.setTokenToHttpServletResponse(response, user);
+        httpTools.setTokenToHttpServletResponse(response, userDto);
 
-        return UserInfoDto.from(user);
+        return UserInfoDto.from(userDto);
     }
 }

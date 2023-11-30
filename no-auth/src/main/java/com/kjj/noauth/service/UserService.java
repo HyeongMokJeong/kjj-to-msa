@@ -1,40 +1,34 @@
 package com.kjj.noauth.service;
 
+import com.kjj.noauth.client.UserClient;
 import com.kjj.noauth.dto.user.JoinDto;
-import com.kjj.noauth.entity.User;
-import com.kjj.noauth.repository.UserRepository;
+import com.kjj.noauth.dto.user.UserDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
 
-    private final UserRepository userRepository;
+    private final UserClient userClient;
 
-    @Transactional(readOnly = true)
-    public User loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
-        if (user == null) throw new UsernameNotFoundException("""
-                해당 username을 가진 유저를 찾을 수 없습니다.
-                username : """ + username);
-        return user;
+    public UserDto loadUserByUsername(String username) {
+        return userClient.findByUsername(username);
     }
 
-    public void join(JoinDto dto) {
-        // user 생성 및 저장, id를 얻어서 user 서버에 mypage, policy 추가 요청
+    public boolean join(JoinDto dto) {
+        return userClient.join(dto);
     }
 
-    public User joinKeycloak(String sub, String roles) {
-        User user = User.ofKeycloak(sub, roles);
-        // user 저장, id를 얻어서 user 서버에 mypage, policy 추가 요청
-
-        return user;
+    public UserDto joinKeycloak(String sub, String roles) {
+        return userClient.joinKeycloak(UserDto.ofKeycloak(sub, roles));
     }
 
     public boolean checkLoginId(String username) {
-        return userRepository.existsByUsername(username);
+        return userClient.existsByUsername(username);
+    }
+
+    public boolean withdrawKeycloak(String username) {
+        return userClient.withdrawKeycloak(username);
     }
 }

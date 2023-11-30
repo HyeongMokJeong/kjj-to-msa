@@ -1,22 +1,10 @@
 # env
 spring:
   profiles:
-    include: db, dbAuth, slack, monitor, keycloak
+    include: monitor, keycloak, client
 
   application:
     name: kjj-no-auth
-
-  # data.sql
-  jpa:
-    hibernate:
-      ddl-auto: none
-    properties:
-        hibernate:
-          show_sql: true
-          format_sql: true
-  sql:
-    init:
-      mode: never
 
   mvc:
     pathmatch:
@@ -28,19 +16,3 @@ jasypt:
 
 server:
   port: 60000
----
-spring:
-  config:
-    activate:
-      on-profile: prod
-
-  # data.sql
-  sql:
-    init:
-      mode: never
-  jpa:
-    hibernate:
-      ddl-auto: none
-    properties:
-      hibernate:
-        show_sql: false

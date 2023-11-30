@@ -1,0 +1,10 @@
+server:
+  port: 50001
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      jdbc-url: jdbc:mysql://localhost:3306/kjj_user?useSSL=false&allowPublicKeyRetrieval=true
+      username: test
+      password: test1234

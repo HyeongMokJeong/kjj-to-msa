@@ -17,13 +17,12 @@ public class JoinController {
     private final KeycloakService keycloakService;
 
     @PostMapping
-    public ResponseEntity<String> join(@RequestBody JoinDto dto) {
+    public ResponseEntity<Boolean> join(@RequestBody JoinDto dto) {
         if (!dto.checkForm()) throw new WrongRequestBodyException("""
                 데이터 형식이 올바르지 않습니다.
                 dto : """ + dto);
-        userService.join(dto);
 
-        return ResponseEntity.ok("회원가입에 성공했습니다.");
+        return ResponseEntity.ok(userService.join(dto));
     }
 
     @PostMapping("/keycloak")
