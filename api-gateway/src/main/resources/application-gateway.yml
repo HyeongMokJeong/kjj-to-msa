@@ -1,0 +1,12 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: no-auth-server
+          uri: http://localhost:60000/v1/no-auth/
+          predicates:
+            - Path=/api/user/login/**
+        - id: user-server
+          uri: http://localhost:50001
+          predicates:
+            - Path=/api/
