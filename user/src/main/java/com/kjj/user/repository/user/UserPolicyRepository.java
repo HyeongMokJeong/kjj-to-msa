@@ -1,4 +1,4 @@
-package com.kjj.user.repository;
+package com.kjj.user.repository.user;
 
 import com.kjj.user.entity.User;
 import com.kjj.user.entity.UserPolicy;

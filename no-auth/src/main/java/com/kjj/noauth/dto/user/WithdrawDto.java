@@ -1,4 +1,4 @@
-package com.kjj.user.dto.auth;
+package com.kjj.noauth.dto.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

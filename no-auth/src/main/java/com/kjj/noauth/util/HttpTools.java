@@ -5,6 +5,9 @@ import com.kjj.noauth.util.jwt.JwtTemplate;
 import com.kjj.noauth.util.jwt.JwtTools;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -19,5 +22,12 @@ public class HttpTools {
 
         response.setHeader(jwtTemplate.getHeaderString(), jwtTemplate.getTokenPrefix() + accessToken);
         response.setHeader(jwtTemplate.getRefreshHeaderString(), jwtTemplate.getTokenPrefix() + refreshToken);
+    }
+
+    public <T>HttpEntity<T> getRequestEntityTypeJson(T bodyObject) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        return new HttpEntity<>(bodyObject, headers);
     }
 }

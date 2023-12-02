@@ -4,7 +4,13 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    hikari:
-      jdbc-url: jdbc:mysql://localhost:3306/kjj_user?useSSL=false&allowPublicKeyRetrieval=true
-      username: test
-      password: test1234
+    username: test
+    password: test1234
+    url: jdbc:mysql://localhost:3306/kjj_user?useSSL=false&allowPublicKeyRetrieval=true
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true

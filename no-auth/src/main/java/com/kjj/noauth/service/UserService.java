@@ -3,6 +3,7 @@ package com.kjj.noauth.service;
 import com.kjj.noauth.client.UserClient;
 import com.kjj.noauth.dto.user.JoinDto;
 import com.kjj.noauth.dto.user.UserDto;
+import com.kjj.noauth.dto.user.WithdrawDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +29,14 @@ public class UserService {
         return userClient.existsByUsername(username);
     }
 
-    public boolean withdrawKeycloak(String username) {
-        return userClient.withdrawKeycloak(username);
+    public boolean withdraw(String username, WithdrawDto dto) {
+        if (userClient.checkPassword(username, dto.getPassword())) {
+            return userClient.withdraw(username);
+        }
+        else return false;
+    }
+
+    public boolean withdraw(String username) {
+        return userClient.withdraw(username);
     }
 }

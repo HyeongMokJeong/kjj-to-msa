@@ -5,9 +5,9 @@ import com.kjj.user.dto.user.UserDto;
 import com.kjj.user.entity.User;
 import com.kjj.user.entity.UserMyPage;
 import com.kjj.user.entity.UserPolicy;
-import com.kjj.user.repository.UserMyPageRepository;
-import com.kjj.user.repository.UserPolicyRepository;
-import com.kjj.user.repository.UserRepository;
+import com.kjj.user.repository.user.UserMyPageRepository;
+import com.kjj.user.repository.user.UserPolicyRepository;
+import com.kjj.user.repository.user.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -62,13 +62,5 @@ public class UserKeycloakService {
             return null;
         }
         return dto;
-    }
-
-    @Transactional
-    public Boolean withdrawKeycloak(String username) {
-        User user = userRepository.findByUsername(username).orElse(null);
-        if (user == null) return false;
-        userRepository.delete(user);
-        return true;
     }
 }

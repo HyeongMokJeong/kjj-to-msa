@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -25,16 +26,20 @@ public class User {
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private UserMyPage userMypage;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.REMOVE)
+    private List<Order> order;
+
     private String username;
     private String password;
     private String roles;
-    private String loginDate;
+    private LocalDate loginDate;
 
     public static User of(JoinDto dto, UserPolicy userPolicy, UserMyPage userMypage) {
         return new User(
                 null,
                 userPolicy,
                 userMypage,
+                null,
                 dto.getUsername(),
                 dto.getPassword(),
                 "ROLE_USER",
@@ -47,6 +52,7 @@ public class User {
                 null,
                 userPolicy,
                 userMypage,
+                null,
                 dto.getUsername(),
                 dto.getPassword(),
                 dto.getRoles(),
@@ -67,6 +73,6 @@ public class User {
         this.password = password;
     }
     public void updateLoginDate() {
-        loginDate = LocalDate.now().toString();
+        loginDate = LocalDate.now();
     }
 }

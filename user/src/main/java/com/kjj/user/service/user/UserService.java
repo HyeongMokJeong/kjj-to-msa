@@ -1,6 +1,5 @@
 package com.kjj.user.service.user;
 
-import com.kjj.user.dto.auth.WithdrawDto;
 import com.kjj.user.dto.user.*;
 import com.kjj.user.entity.User;
 import com.kjj.user.entity.UserMyPage;
@@ -8,9 +7,7 @@ import com.kjj.user.entity.UserPolicy;
 import com.kjj.user.exception.CantFindByIdException;
 import com.kjj.user.exception.CantFindByUsernameException;
 import com.kjj.user.exception.WrongRequestBodyException;
-import com.kjj.user.repository.UserMyPageRepository;
-import com.kjj.user.repository.UserPolicyRepository;
-import com.kjj.user.repository.UserRepository;
+import com.kjj.user.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -22,19 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class UserService {
 
-
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
-
-    @Transactional
-    public void withdraw(String username, WithdrawDto dto) throws CantFindByUsernameException {
-        User user = userRepository.findByUsername(username).orElseThrow(() -> new CantFindByUsernameException("""
-                해당 username을 가진 유저 데이터를 찾을 수 없습니다.
-                username = """ + username));
-        if (bCryptPasswordEncoder.matches(dto.getPassword(), user.getPassword())) userRepository.delete(user);
-        else throw new WrongRequestBodyException("비밀번호가 맞지 않습니다.");
-    }
-
     
     @Transactional(readOnly = true)
     public UserInfoDto getInfo(Long id) throws CantFindByIdException {
@@ -103,5 +89,20 @@ public class UserService {
                 해당 id를 가진 유저 데이터를 찾을 수 없습니다.
                 id : """ + id)).getUserPolicy();
         return PolicyDto.from(policy);
+    }
+
+    @Transactional
+    public Boolean withdraw(String username) {
+        User user = userRepository.findByUsername(username).orElse(null);
+        if (user == null) return false;
+        userRepository.delete(user);
+        return true;
+    }
+
+    public Boolean checkPassword(String username, String password) {
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new CantFindByUsernameException("""
+                해당 username을 가진 유저 데이터를 찾을 수 없습니다.
+                username = """ + username));
+        return bCryptPasswordEncoder.matches(password, user.getPassword());
     }
 }

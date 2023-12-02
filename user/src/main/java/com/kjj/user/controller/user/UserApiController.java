@@ -1,8 +1,8 @@
 package com.kjj.user.controller.user;
 
-import com.kjj.user.dto.auth.WithdrawDto;
 import com.kjj.user.dto.user.UserInfoDto;
 import com.kjj.user.service.user.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,11 +14,10 @@ public class UserApiController {
 
     private final UserService userService;
 
+    // no-auth 서버에서 탈퇴요청 수신 시 유저 삭제를 위해 사용하는 API
     @DeleteMapping("/withdraw")
-    public ResponseEntity<String> withdraw(@RequestParam("username") String username, @RequestBody WithdrawDto dto) {
-        userService.withdraw(username, dto);
-
-        return ResponseEntity.ok("탈퇴되었습니다.");
+    public ResponseEntity<Boolean> withdraw(@RequestParam("username") String username) {
+        return ResponseEntity.ok(userService.withdraw(username));
     }
 
     @GetMapping("/info")

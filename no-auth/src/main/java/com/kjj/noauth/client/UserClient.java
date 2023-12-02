@@ -3,8 +3,11 @@ package com.kjj.noauth.client;
 import com.kjj.noauth.dto.user.JoinDto;
 import com.kjj.noauth.dto.user.UserDto;
 import com.kjj.noauth.exception.CantFindByUsernameException;
+import com.kjj.noauth.util.HttpTools;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.client.RestTemplate;
 
@@ -14,6 +17,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class UserClient {
     private final RestTemplate restTemplate;
+    private final HttpTools httpTools;
     @Value("${my.client.user.host}") private String userServerHost;
 
     private String getRequestURI(String path) {
@@ -46,16 +50,21 @@ public class UserClient {
 
     public Boolean join(JoinDto dto) {
         String uri = getRequestURI("/v1/user/join");
-        return restTemplate.postForObject(uri, dto, Boolean.class);
+        return restTemplate.postForObject(uri, httpTools.getRequestEntityTypeJson(dto), Boolean.class);
     }
 
     public UserDto joinKeycloak(UserDto dto) {
         String uri = getRequestURI("/v1/user/join/keycloak");
-        return restTemplate.postForObject(uri, dto, UserDto.class);
+        return restTemplate.postForObject(uri, httpTools.getRequestEntityTypeJson(dto), UserDto.class);
     }
 
-    public Boolean withdrawKeycloak(String username) {
-        String uri = getRequestURI("/v1/user/withdraw/keycloak", Map.of("username", username));
+    public Boolean withdraw(String username) {
+        String uri = getRequestURI("/v1/user/withdraw", Map.of("username", username));
+        return restTemplate.getForObject(uri, Boolean.class);
+    }
+
+    public Boolean checkPassword(String username, String password) {
+        String uri = getRequestURI("/v1/user/check/password", Map.of("username", username, "password", password));
         return restTemplate.getForObject(uri, Boolean.class);
     }
 }

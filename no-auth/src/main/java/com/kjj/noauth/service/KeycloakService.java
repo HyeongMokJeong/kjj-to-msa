@@ -129,16 +129,17 @@ public class KeycloakService {
         }
     }
 
-    public void withdrawSso(String username) throws CantFindByUsernameException {
+    public Boolean withdrawSso(String username) throws CantFindByUsernameException {
         String originUsername = username.replace("_keycloak", "");
 
         RealmResource realmResource = keycloak.realm(realm);
         UsersResource usersResource = realmResource.users();
         try (Response response = usersResource.delete(originUsername)) {
             if (response.getStatus() == 204) {
-                if (!userService.withdrawKeycloak(username)) throw new KeycloakWithdrawException("""
+                if (!userService.withdraw(originUsername)) throw new KeycloakWithdrawException("""
                         키클락 탈퇴는 성공했으나 회원 탈퇴에 실패했습니다.
                         username = """ + username);
+                return true;
             }
             else throw new KeycloakWithdrawException("username = " + username);
         }
