@@ -1,0 +1,4 @@
+my:
+  client:
+    menu:
+      host: http://localhost:50002

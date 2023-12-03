@@ -43,9 +43,6 @@ dependencies {
 
     // JWT
     implementation group: 'com.auth0', name: 'java-jwt', version: '3.10.3'
-
-    // QRCode
-    implementation 'com.google.zxing:javase:3.4.1'
 }
 
 tasks.named('test') {

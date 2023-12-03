@@ -1,0 +1,8 @@
+my:
+  client:
+    image:
+      host: http://localhost:60001
+    order:
+      host: http://localhost:50001
+    user:
+      host: http://localhost:50001

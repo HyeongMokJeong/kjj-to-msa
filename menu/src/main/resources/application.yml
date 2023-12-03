@@ -1,2 +1,19 @@
 server:
   port: 50002
+
+spring:
+  profiles:
+    include: client, redis
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: test
+    password: test1234
+    url: jdbc:mysql://localhost:3306/kjj_menu?useSSL=false&allowPublicKeyRetrieval=true
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true

@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping({"/v1/no-auth/login"})
+@RequestMapping({"/v1/no-auth"})
 @RequiredArgsConstructor
 public class LoginController {
 

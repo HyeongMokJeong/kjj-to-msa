@@ -17,15 +17,6 @@ public class UserDto {
     private String password;
     private String roles;
 
-    public static UserDto from(Object[] objects) {
-        return new UserDto(
-                (Long) objects[0],
-                (String) objects[1],
-                (String) objects[2],
-                (String) objects[3]
-        );
-    }
-
     public static UserDto ofKeycloak(String sub, String roles) {
         StringBuilder sb = new StringBuilder();
         Random random = new Random();
