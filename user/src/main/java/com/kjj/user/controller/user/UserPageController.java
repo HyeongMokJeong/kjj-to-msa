@@ -17,13 +17,13 @@ public class UserPageController {
     private final UserService userService;
 
     @GetMapping
-    public ResponseEntity<MyPageDto> getMyPage(@RequestParam("id") Long id) throws CantFindByIdException {
+    public ResponseEntity<MyPageDto> getMyPage(@RequestParam("userId") Long id) throws CantFindByIdException {
 
         return ResponseEntity.ok(userService.getMyPage(id));
     }
 
     @PostMapping("/point")
-    public ResponseEntity<Integer> usePoint(@RequestParam("id") Long id, @RequestBody UsePointDto dto) throws CantFindByIdException {
+    public ResponseEntity<Integer> usePoint(@RequestParam("userId") Long id, @RequestBody UsePointDto dto) throws CantFindByIdException {
 
         return ResponseEntity.ok(userService.usePoint(id, dto));
     }

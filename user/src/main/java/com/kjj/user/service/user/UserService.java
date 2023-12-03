@@ -1,5 +1,6 @@
 package com.kjj.user.service.user;
 
+import com.kjj.user.client.MenuClient;
 import com.kjj.user.dto.user.*;
 import com.kjj.user.entity.User;
 import com.kjj.user.entity.UserMyPage;
@@ -7,6 +8,7 @@ import com.kjj.user.entity.UserPolicy;
 import com.kjj.user.exception.CantFindByIdException;
 import com.kjj.user.exception.CantFindByUsernameException;
 import com.kjj.user.exception.WrongRequestBodyException;
+import com.kjj.user.repository.user.UserPolicyRepository;
 import com.kjj.user.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +22,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final UserPolicyRepository userPolicyRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final MenuClient menuClient;
     
     @Transactional(readOnly = true)
     public UserInfoDto getInfo(Long id) throws CantFindByIdException {
@@ -30,7 +34,6 @@ public class UserService {
         return UserInfoDto.from(user);
     }
 
-    
     @Transactional(readOnly = true)
     public MyPageDto getMyPage(Long id) throws CantFindByIdException {
         UserMyPage mypage= userRepository.findByIdWithFetchMyPage(id).orElseThrow(() -> new CantFindByIdException("""
@@ -38,7 +41,6 @@ public class UserService {
                 id : """ + id)).getUserMypage();
         return MyPageDto.from(mypage);
     }
-
     
     @Transactional
     public Integer usePoint(Long id, UsePointDto dto) throws WrongRequestBodyException, CantFindByIdException {
@@ -68,18 +70,17 @@ public class UserService {
 
 
     @Transactional
-    public PolicyDto setUserMenuPolicy(Long id, Long menuId) throws CantFindByIdException {
-//        if (!menuClient.existsById(menuId)) throw new WrongRequestBodyException("""
-//                menuId를 가진 메뉴 데이터가 존재하지 않습니다.
-//                menuId : """ + menuId);
-//
-//        UserPolicy policy = userRepository.findByIdWithFetchPolicy(id).orElseThrow(() -> new CantFindByIdException("""
-//                해당 id를 가진 유저 데이터를 찾을 수 없습니다.
-//                id : """ + id)).getUserPolicy();
-//        policy.setDefaultMenu(menuId);
-//
-//        return PolicyDto.from(policy);
-        return null;
+    public PolicyDto setUserMenuPolicy(Long userId, Long menuId) throws CantFindByIdException {
+        if (!menuClient.existsById(menuId)) throw new WrongRequestBodyException("""
+                menuId를 가진 메뉴 데이터가 존재하지 않습니다.
+                menuId : """ + menuId);
+
+        UserPolicy policy = userRepository.findByIdWithFetchPolicy(userId).orElseThrow(() -> new CantFindByIdException("""
+                해당 id를 가진 유저 데이터를 찾을 수 없습니다.
+                id : """ + userId)).getUserPolicy();
+        policy.setDefaultMenu(menuId);
+
+        return PolicyDto.from(policy);
     }
 
     
@@ -104,5 +105,9 @@ public class UserService {
                 해당 username을 가진 유저 데이터를 찾을 수 없습니다.
                 username = """ + username));
         return bCryptPasswordEncoder.matches(password, user.getPassword());
+    }
+
+    public void clearPolicyByDeletedMenu(Long menuId) {
+        userPolicyRepository.clearPolicyByDeletedMenu(menuId);
     }
 }

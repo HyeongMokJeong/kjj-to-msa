@@ -60,17 +60,8 @@ public class User {
         );
     }
 
-    public void setUserPolicy(UserPolicy userPolicy) {
-        this.userPolicy = userPolicy;
-    }
-    public void setUserMypage(UserMyPage userMypage) {
-        this.userMypage = userMypage;
-    }
     public void setUsername(String username) {
         this.username = username;
-    }
-    public void setPassword(String password) {
-        this.password = password;
     }
     public void updateLoginDate() {
         loginDate = LocalDate.now();

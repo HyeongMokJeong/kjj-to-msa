@@ -29,12 +29,12 @@ public class OrderUserApiController {
 
     @PostMapping("/add/{menuId}/{year}/{month}/{day}")
     public ResponseEntity<OrderDto> addOrder(
-            @RequestParam("username") String username,
+            @RequestParam("userId") Long userId,
             @PathVariable Long menuId,
             @PathVariable int year,
             @PathVariable int month,
             @PathVariable int day) throws CantFindByIdException {
-        return ResponseEntity.ok(orderService.addOrder(username, menuId, year, month, day));
+        return ResponseEntity.ok(orderService.addOrder(userId, menuId, year, month, day));
     }
 
     @GetMapping("/{year}/{month}")

@@ -14,14 +14,8 @@ public class UserApiController {
 
     private final UserService userService;
 
-    // no-auth 서버에서 탈퇴요청 수신 시 유저 삭제를 위해 사용하는 API
-    @DeleteMapping("/withdraw")
-    public ResponseEntity<Boolean> withdraw(@RequestParam("username") String username) {
-        return ResponseEntity.ok(userService.withdraw(username));
-    }
-
     @GetMapping("/info")
-    public ResponseEntity<UserInfoDto> getInfo(@RequestParam("id") Long id) {
+    public ResponseEntity<UserInfoDto> getInfo(@RequestParam("userId") Long id) {
 
         return ResponseEntity.ok(userService.getInfo(id));
     }

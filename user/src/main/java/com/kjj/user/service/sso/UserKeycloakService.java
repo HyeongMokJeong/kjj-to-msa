@@ -5,6 +5,7 @@ import com.kjj.user.dto.user.UserDto;
 import com.kjj.user.entity.User;
 import com.kjj.user.entity.UserMyPage;
 import com.kjj.user.entity.UserPolicy;
+import com.kjj.user.exception.CantFindByIdException;
 import com.kjj.user.repository.user.UserMyPageRepository;
 import com.kjj.user.repository.user.UserPolicyRepository;
 import com.kjj.user.repository.user.UserRepository;
@@ -34,9 +35,12 @@ public class UserKeycloakService {
     }
 
     public UserDto findByUsername(String username) {
-        User user = userRepository.findByUsername(username).orElse(null);
-        if (user == null) return null;
-        return UserDto.from(user);
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new CantFindByIdException("""
+                해당 username을 가진 유저를 찾을 수 없습니다.
+                username = """ + username));
+        UserDto result = UserDto.from(user);
+        user.updateLoginDate();
+        return result;
     }
 
     public Boolean existsByUsername(String username) {

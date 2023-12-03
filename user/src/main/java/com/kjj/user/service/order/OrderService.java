@@ -1,10 +1,7 @@
 package com.kjj.user.service.order;
 
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.WriterException;
-import com.google.zxing.client.j2se.MatrixToImageWriter;
-import com.google.zxing.common.BitMatrix;
-import com.google.zxing.qrcode.QRCodeWriter;
+import com.kjj.user.client.MenuClient;
+import com.kjj.user.dto.menu.MenuNameAndCostDto;
 import com.kjj.user.dto.order.LastOrderDto;
 import com.kjj.user.dto.order.OrderDto;
 import com.kjj.user.entity.Order;
@@ -33,44 +30,31 @@ import java.util.Optional;
 public class OrderService{
 
     private final UserRepository userRepository;
+    private final MenuClient menuClient;
     private final OrderRepository orderRepository;
     private final DateUtil dateUtil;
 
     private static final int PAGE_SIZE = 10;
 
     private Long getDefaultMenuId(Long userId) throws CantFindByIdException {
-//        UserPolicy policy = userRepository.findById(userId).orElseThrow(() -> new CantFindByIdException("""
-//                해당 id를 가진 user가 없습니다.
-//                userId : """ + userId)).getUserPolicy();
-//
-//        if (policy == null) throw new CantFindByIdException("""
-//                user가 UserPolicy를 가지고 있지 않습니다.
-//                userId : """ + userId);
-//
-//        Long defaultMenu = policy.getDefaultMenu();
-//        if (defaultMenu == null) return null;
-//        else return menuRepository.findById(defaultMenu).orElseGet( () -> {
-//                    policy.setDefaultMenu(null);
-//                    return null;
-//                }
-//        ).getId();
-        return null;
+        UserPolicy policy = userRepository.findByIdWithFetchPolicy(userId).orElseThrow(() -> new CantFindByIdException("""
+                해당 id를 가진 user가 없습니다.
+                userId : """ + userId)).getUserPolicy();
+
+        if (policy == null) throw new CantFindByIdException("""
+                user가 UserPolicy를 가지고 있지 않습니다.
+                userId : """ + userId);
+
+        if (!menuClient.existsById(policy.getDefaultMenu())) policy.setDefaultMenu(null);
+        return policy.getDefaultMenu();
     }
 
-    @Transactional
-    public Order createNewOrder(Long userId, Long menuId, LocalDate date, boolean type) throws CantFindByIdException {
-//        if (menuId == null) throw new WrongRequestDetails("""
-//                전달된 menuId가 null 입니다.
-//                menuId : """, menuId);
-//
-//        Menu menu = menuRepository.findById(menuId).orElseThrow(() -> new CantFindByIdException("""
-//                menuId는 전달되었으나, 해당 id를 가진 메뉴가 존재하지 않습니다.
-//                menuId : """, menuId));
-//
-//        Order order = Order.createNewOrder(userRepository.getReferenceById(userId), menu.getName(), menu.getCost(), date, type);
-//
-//        return orderRepository.save(order);
-        return null;
+    private Order createNewOrder(Long userId, Long menuId, LocalDate date, boolean type) throws CantFindByIdException {
+        MenuNameAndCostDto dto = menuClient.findNameAndCostById(menuId);
+
+        Order order = Order.createNewOrder(userRepository.getReferenceById(userId), dto.getName(), dto.getCost(), date, type);
+
+        return orderRepository.save(order);
     }
 
     @Transactional
@@ -84,18 +68,15 @@ public class OrderService{
     }
 
     @Transactional
-    public OrderDto addOrder(String username, Long menuId, int year, int month, int day) throws CantFindByIdException {
-//        LocalDate date = dateUtil.makeLocalDate(year, month, day);
-//        Order order = orderRepository.findByUserIdAndOrderDate(id, date).orElse(null);
-//
-//        if (order == null) order = orderRepository.save(createNewOrder(id, menuId, date, true));
-//        else {
-//            order.setMenuAndRecognizeTrue(menuRepository.findById(menuId).orElseThrow(() -> new CantFindByIdException("""
-//                    해당 id를 가진 menu를 찾을 수 없습니다.
-//                    menuId : """, menuId)));
-//        }
-//        return OrderDto.from(order);
-        return null;
+    public OrderDto addOrder(Long userId, Long menuId, int year, int month, int day) throws CantFindByIdException {
+        LocalDate date = dateUtil.makeLocalDate(year, month, day);
+        Order order = orderRepository.findByUserIdAndOrderDate(userId, date).orElse(null);
+
+        if (order == null) order = orderRepository.save(createNewOrder(userId, menuId, date, true));
+        else {
+            order.setMenuAndRecognizeTrue(menuClient.findNameById(menuId));
+        }
+        return OrderDto.from(order);
     }
 
     
@@ -137,23 +118,6 @@ public class OrderService{
                 .orElse(null);
     }
 
-    
-    public BufferedImage getOrderQr(Long orderId) throws WriterException {
-        String domain = "http://localhost:8080";
-        String endPoint = "/api/user/order/" + orderId + "/qr";
-
-        return createQRCode(domain + endPoint);
-    }
-
-    
-    public BufferedImage createQRCode(String data) throws WriterException {
-        QRCodeWriter qrCodeWriter = new QRCodeWriter();
-        BitMatrix bitMatrix = qrCodeWriter.encode(data, BarcodeFormat.QR_CODE, 100, 100);
-
-        return MatrixToImageWriter.toBufferedImage(bitMatrix);
-    }
-
-    
     @Transactional(readOnly = true)
     public List<OrderDto> getOrderMonth(Long userId, int year, int month) {
         List<Order> orders = orderRepository.findByUserIdAndOrderDate_YearAndOrderDate_Month(userId, year, month);
@@ -206,5 +170,9 @@ public class OrderService{
         order.setPaymentTrue();
 
         return OrderDto.from(order);
+    }
+
+    public void deleteAllByMenu(String menuName) {
+        orderRepository.deleteAllByMenu(menuName);
     }
 }

@@ -6,13 +6,11 @@ import com.kjj.user.service.manager.ManagerService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
-@RestController("/v1/manager")
+@RestController
+@RequestMapping("/v1/manager")
 public class ManagerApiController {
     private final ManagerService managerService;
 
