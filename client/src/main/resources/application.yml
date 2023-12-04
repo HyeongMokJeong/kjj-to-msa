@@ -1,0 +1,16 @@
+kjj:
+  client:
+    order:
+      host: http://localhost:50001
+    user:
+      host: http://localhost:50001
+    menu:
+      host: http://localhost:50002
+    store:
+      host: http://localhost:50003
+    planner:
+      host: http://localhost:50004
+    calculate:
+      host: http://localhost:50005
+    image:
+      host: http://localhost:60001
