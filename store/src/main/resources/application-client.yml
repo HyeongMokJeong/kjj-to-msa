@@ -1,4 +1,4 @@
 my:
   client:
     image:
-      host: http://localhost:60001
+      host: http://image:60001

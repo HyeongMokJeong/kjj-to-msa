@@ -79,7 +79,6 @@ public class CheckJwtFilterFactory extends AbstractGatewayFilterFactory {
 
             // 이전 쿼리 파라미터에 username과 id를 추가한 새로운 uri
             URI uri = addQueryParamToUri(requestUri, exchange.getRequest().getQueryParams(), username, id);
-            System.out.println(uri);
 
             ServerWebExchange webExchange = exchange.mutate()
                     .request(exchange.getRequest().mutate().uri(uri).build())

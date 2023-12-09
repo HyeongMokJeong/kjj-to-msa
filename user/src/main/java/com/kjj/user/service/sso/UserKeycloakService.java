@@ -3,7 +3,7 @@ package com.kjj.user.service.sso;
 import com.kjj.user.dto.user.JoinDto;
 import com.kjj.user.dto.user.UserDto;
 import com.kjj.user.entity.User;
-import com.kjj.user.entity.UserMyPage;
+import com.kjj.user.entity.UserMypage;
 import com.kjj.user.entity.UserPolicy;
 import com.kjj.user.exception.CantFindByIdException;
 import com.kjj.user.repository.user.UserMyPageRepository;
@@ -24,13 +24,13 @@ public class UserKeycloakService {
 
     private User createNewUserWithDefaultPolicyAndMyPage(JoinDto dto) {
         UserPolicy userPolicy = userPolicyRepository.save(UserPolicy.createNewUserPolicy());
-        UserMyPage userMyPage = userMyPageRepository.save(UserMyPage.createNewUserMyPage());
+        UserMypage userMyPage = userMyPageRepository.save(UserMypage.createNewUserMyPage());
         return User.of(dto, userPolicy, userMyPage);
     }
 
     private User createNewUserWithDefaultPolicyAndMyPage(UserDto dto) {
         UserPolicy userPolicy = userPolicyRepository.save(UserPolicy.createNewUserPolicy());
-        UserMyPage userMyPage = userMyPageRepository.save(UserMyPage.createNewUserMyPage());
+        UserMypage userMyPage = userMyPageRepository.save(UserMypage.createNewUserMyPage());
         return User.of(dto, userPolicy, userMyPage);
     }
 

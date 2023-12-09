@@ -5,7 +5,7 @@ import com.kjj.user.dto.menu.MenuNameAndCostDto;
 import com.kjj.user.dto.order.LastOrderDto;
 import com.kjj.user.dto.order.OrderDto;
 import com.kjj.user.entity.Order;
-import com.kjj.user.entity.UserMyPage;
+import com.kjj.user.entity.UserMypage;
 import com.kjj.user.entity.UserPolicy;
 import com.kjj.user.exception.CantFindByIdException;
 import com.kjj.user.repository.order.OrderRepository;
@@ -19,7 +19,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.awt.image.BufferedImage;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -146,7 +145,7 @@ public class OrderService{
             order.setExpiredTrue();
 
             int point = 50;
-            UserMyPage myPage = order.getUser().getUserMypage();
+            UserMypage myPage = order.getUser().getUserMypage();
             myPage.updatePoint(point);
         }
     }

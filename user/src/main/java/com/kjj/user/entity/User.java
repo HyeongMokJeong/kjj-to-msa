@@ -24,7 +24,7 @@ public class User {
     private UserPolicy userPolicy;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private UserMyPage userMypage;
+    private UserMypage userMypage;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<Order> order;
@@ -34,7 +34,7 @@ public class User {
     private String roles;
     private LocalDate loginDate;
 
-    public static User of(JoinDto dto, UserPolicy userPolicy, UserMyPage userMypage) {
+    public static User of(JoinDto dto, UserPolicy userPolicy, UserMypage userMypage) {
         return new User(
                 null,
                 userPolicy,
@@ -47,7 +47,7 @@ public class User {
         );
     }
 
-    public static User of(UserDto dto, UserPolicy userPolicy, UserMyPage userMypage) {
+    public static User of(UserDto dto, UserPolicy userPolicy, UserMypage userMypage) {
         return new User(
                 null,
                 userPolicy,

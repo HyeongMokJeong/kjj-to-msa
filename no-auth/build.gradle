@@ -38,9 +38,6 @@ dependencies {
     // jasypt
     implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.5'
 
-    // actuator
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
-
     // keycloak
     implementation 'org.keycloak:keycloak-admin-client:22.0.1'
 }

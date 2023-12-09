@@ -16,7 +16,7 @@ public class UserApiController {
 
     @GetMapping("/info")
     public ResponseEntity<UserInfoDto> getInfo(@RequestParam("userId") Long id) {
-
+        System.out.println("controller IN");
         return ResponseEntity.ok(userService.getInfo(id));
     }
 }

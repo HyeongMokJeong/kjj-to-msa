@@ -3,5 +3,5 @@ spring:
     type: redis
   data:
     redis:
-      host: localhost
+      host: db-redis
       port: 6379

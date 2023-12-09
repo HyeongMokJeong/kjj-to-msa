@@ -1,7 +1,7 @@
 package com.kjj.user.repository.user;
 
-import com.kjj.user.entity.UserMyPage;
+import com.kjj.user.entity.UserMypage;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserMyPageRepository extends JpaRepository<UserMyPage, Long> {
+public interface UserMyPageRepository extends JpaRepository<UserMypage, Long> {
 }

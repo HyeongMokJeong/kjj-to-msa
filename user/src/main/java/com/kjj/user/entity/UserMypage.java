@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserMyPage {
+public class UserMypage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,8 +22,8 @@ public class UserMyPage {
         point += value;
     }
 
-    public static UserMyPage createNewUserMyPage() {
-        return new UserMyPage(
+    public static UserMypage createNewUserMyPage() {
+        return new UserMypage(
                 null,
                 0
         );

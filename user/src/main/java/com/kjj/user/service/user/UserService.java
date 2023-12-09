@@ -3,7 +3,7 @@ package com.kjj.user.service.user;
 import com.kjj.user.client.MenuClient;
 import com.kjj.user.dto.user.*;
 import com.kjj.user.entity.User;
-import com.kjj.user.entity.UserMyPage;
+import com.kjj.user.entity.UserMypage;
 import com.kjj.user.entity.UserPolicy;
 import com.kjj.user.exception.CantFindByIdException;
 import com.kjj.user.exception.CantFindByUsernameException;
@@ -36,7 +36,7 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public MyPageDto getMyPage(Long id) throws CantFindByIdException {
-        UserMyPage mypage= userRepository.findByIdWithFetchMyPage(id).orElseThrow(() -> new CantFindByIdException("""
+        UserMypage mypage= userRepository.findByIdWithFetchMyPage(id).orElseThrow(() -> new CantFindByIdException("""
                 해당 id를 가진 유저 데이터를 찾을 수 없습니다.
                 id : """ + id)).getUserMypage();
         return MyPageDto.from(mypage);
@@ -44,7 +44,7 @@ public class UserService {
     
     @Transactional
     public Integer usePoint(Long id, UsePointDto dto) throws WrongRequestBodyException, CantFindByIdException {
-        UserMyPage mypage= userRepository.findByIdWithFetchMyPage(id).orElseThrow(() -> new CantFindByIdException("""
+        UserMypage mypage= userRepository.findByIdWithFetchMyPage(id).orElseThrow(() -> new CantFindByIdException("""
                 해당 id를 가진 유저 데이터를 찾을 수 없습니다.
                 id : """ + id)).getUserMypage();
         int data = -1 * dto.getValue();

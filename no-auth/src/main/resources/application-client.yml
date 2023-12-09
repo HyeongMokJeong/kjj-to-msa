@@ -1,4 +1,14 @@
 my:
   client:
     user:
+      host: http://user:50001
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+my:
+  client:
+    user:
       host: http://localhost:50001
