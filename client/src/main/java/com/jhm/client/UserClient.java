@@ -1,7 +1,7 @@
 package com.jhm.client;
 
-import com.jhm.dto.JoinDto;
-import com.jhm.dto.UserDto;
+import com.jhm.dto.user.JoinDto;
+import com.jhm.dto.user.UserDto;
 import com.jhm.tool.ClientUriTool;
 import com.jhm.tool.HttpTools;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,8 +26,7 @@ public class UserClient {
 
     public UserDto findByUsername(String username) {
         String uri = clientUriTool.getRequestURI(userServerHost, "/v1/user/info/all", Map.of("username", username));
-        UserDto userDto = restTemplate.getForObject(uri, UserDto.class);
-        return userDto;
+        return restTemplate.getForObject(uri, UserDto.class);
     }
 
     public Boolean existsByUsername(String username) {

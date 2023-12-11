@@ -1,6 +1,27 @@
 kjj:
   client:
     order:
+      host: http://user:50001
+    user:
+      host: http://user:50001
+    menu:
+      host: http://menu:50002
+    store:
+      host: http://store:50003
+    planner:
+      host: http://planner:50004
+    calculate:
+      host: http://calculate:50005
+    image:
+      host: http://image:60001
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+kjj:
+  client:
+    order:
       host: http://localhost:50001
     user:
       host: http://localhost:50001

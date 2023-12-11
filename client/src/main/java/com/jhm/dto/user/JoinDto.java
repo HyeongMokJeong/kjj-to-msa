@@ -1,4 +1,4 @@
-package com.jhm.dto;
+package com.jhm.dto.user;
 
 public class JoinDto {
     private String username;
