@@ -7,8 +7,8 @@ spring:
           predicates:
             - Path=/api/user/login/**, /api/manager/login/**
           filters:
-            - RewritePath=/api/user/login/(?<remaining>.*), /v1/no-auth/$\{remaining}
-            - RewritePath=/api/manager/login/(?<remaining>.*), /v1/no-auth/$\{remaining}
+            - RewritePath=/api/user/login(?<remaining>.*), /v1/no-auth$\{remaining}
+            - RewritePath=/api/manager/login(?<remaining>.*), /v1/no-auth$\{remaining}
 
         - id: menu-server
           uri: http://menu:50002/
@@ -25,8 +25,8 @@ spring:
             - Path=/api/user/store/**, /api/manager/store/**
           filters:
             - name: CheckJwtFilterFactory
-            - RewritePath=/api/user/store/(?<remaining>.*), /v1/store/user/$\{remaining}
-            - RewritePath=/api/manager/store/(?<remaining>.*), /v1/store/manager/$\{remaining}
+            - RewritePath=/api/user/store(?<remaining>.*), /v1/store/user$\{remaining}
+            - RewritePath=/api/manager/store(?<remaining>.*), /v1/store/manager$\{remaining}
 
         - id: calculate-server
           uri: http://calculate:50004/
@@ -34,8 +34,8 @@ spring:
             - Path=/api/user/state/**, /api/manager/state/**
           filters:
             - name: CheckJwtFilterFactory
-            - RewritePath=/api/user/state/(?<remaining>.*), /v1/state/user/$\{remaining}
-            - RewritePath=/api/manager/state/(?<remaining>.*), /v1/state/manager/$\{remaining}
+            - RewritePath=/api/user/state(?<remaining>.*), /v1/state/user$\{remaining}
+            - RewritePath=/api/manager/state(?<remaining>.*), /v1/state/manager$\{remaining}
 
         - id: planner-server
           uri: http://planner:50005/
@@ -43,15 +43,15 @@ spring:
             - Path=/api/user/planner/**, /api/manager/planner/**
           filters:
             - name: CheckJwtFilterFactory
-            - RewritePath=/api/user/planner/(?<remaining>.*), /v1/planner/user/$\{remaining}
-            - RewritePath=/api/manager/planner/(?<remaining>.*), /v1/planner/manager/$\{remaining}
+            - RewritePath=/api/user/planner(?<remaining>.*), /v1/planner/user$\{remaining}
+            - RewritePath=/api/manager/planner(?<remaining>.*), /v1/planner/manager$\{remaining}
 
         - id: image-server
           uri: http://image:60001/
           predicates:
             - Path=/api/image/**
           filters:
-            - RewritePath=/api/image/(?<remaining>.*), /v1/image/$\{remaining}
+            - RewritePath=/api/image(?<remaining>.*), /v1/image$\{remaining}
 
         - id: user-server
           uri: http://user:50001/
@@ -59,5 +59,5 @@ spring:
             - Path=/api/user/**, /api/manager/**
           filters:
             - name: CheckJwtFilterFactory
-            - RewritePath=/api/user/(?<remaining>.*), /v1/user/$\{remaining}
-            - RewritePath=/api/manager/(?<remaining>.*), /v1/manager/$\{remaining}
+            - RewritePath=/api/user(?<remaining>.*), /v1/user$\{remaining}
+            - RewritePath=/api/manager(?<remaining>.*), /v1/manager$\{remaining}
