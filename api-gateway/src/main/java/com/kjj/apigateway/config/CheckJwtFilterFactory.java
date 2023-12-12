@@ -64,6 +64,12 @@ public class CheckJwtFilterFactory extends AbstractGatewayFilterFactory {
             // request header에서 token 추출
             String token = exchange.getRequest().getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
 
+            // 토큰이 만료된 상태라면 401 응답
+            if (!jwtUtil.isTokenExpired(token)) {
+                exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+                return exchange.getResponse().setComplete();
+            }
+
             // token에서 username, id 추출
             String username = jwtUtil.getUsernameFromToken(token);
             String id = jwtUtil.getIdFromToken(token);
@@ -71,9 +77,9 @@ public class CheckJwtFilterFactory extends AbstractGatewayFilterFactory {
             // request에서 requestUri, 쿼리 파라미터 추출
             String requestUri = exchange.getRequest().getURI().getPath();
 
-            // 토큰 유효성 검사에 실패하면 401 응답
+            // 토큰 유효성 검사에 실패하면 403 응답
             if (!checkJwt(token, username, id, requestUri)) {
-                exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
+                exchange.getResponse().setStatusCode(HttpStatus.FORBIDDEN);
                 return exchange.getResponse().setComplete();
             }
 
