@@ -1,3 +1,6 @@
+server:
+  port: 55555
+
 kjj:
   client:
     order:
@@ -6,14 +9,6 @@ kjj:
       host: http://user:50001
     menu:
       host: http://menu:50002
-    store:
-      host: http://store:50003
-    planner:
-      host: http://planner:50004
-    calculate:
-      host: http://calculate:50005
-    image:
-      host: http://image:60001
 ---
 spring:
   config:
@@ -27,11 +22,3 @@ kjj:
       host: http://localhost:50001
     menu:
       host: http://localhost:50002
-    store:
-      host: http://localhost:50003
-    planner:
-      host: http://localhost:50004
-    calculate:
-      host: http://localhost:50005
-    image:
-      host: http://localhost:60001

@@ -12,7 +12,7 @@ spring:
     url: jdbc:mysql://db-mysql:3306/kjj_planner?useSSL=false&allowPublicKeyRetrieval=true
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
     properties:
       hibernate:
         show_sql: true
