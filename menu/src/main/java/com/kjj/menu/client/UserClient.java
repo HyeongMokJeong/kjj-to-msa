@@ -13,12 +13,9 @@ public class UserClient {
     private final RestTemplate restTemplate;
     private final ClientUriTool clientUriTool;
 
-    @Value("${my.client.user.host}") private String userServerHost;
-
     public void clearPolicyByDeletedMenu(Long menuId) {
         String uri = clientUriTool.getRequestURI(
-                userServerHost,
-                "/v1/user/policy/menu-del",
+                "/v1/client/user/policy/menu-del",
                 Map.of("id", String.valueOf(menuId)));
         restTemplate.patchForObject(
                 uri,

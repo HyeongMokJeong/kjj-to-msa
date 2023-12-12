@@ -13,10 +13,8 @@ public class OrderClient {
     private final RestTemplate restTemplate;
     private final ClientUriTool clientUriTool;
 
-    @Value("${my.client.order.host}") private String orderServerHost;
-
     public void deleteAllByMenu(String name) {
-        String uri = clientUriTool.getRequestURI(orderServerHost,"/v1/user/order", Map.of("name", name));
+        String uri = clientUriTool.getRequestURI("/v1/client/order", Map.of("name", name));
         restTemplate.delete(uri);
     }
 }

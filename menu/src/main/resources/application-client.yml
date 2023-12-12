@@ -1,8 +1,5 @@
-my:
+kjj:
   client:
+    host: http://client:55555
     image:
       host: http://image:60001
-    order:
-      host: http://order:50001
-    user:
-      host: http://user:50001

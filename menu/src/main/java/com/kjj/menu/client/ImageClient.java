@@ -15,7 +15,7 @@ public class ImageClient {
     private final RestTemplate restTemplate;
     private final HttpTools httpTools;
     private final ClientUriTool clientUriTool;
-    @Value("${my.client.image.host}") private String imageServerHost;
+    @Value("${kjj.client.image.host}") private String imageServerHost;
 
     public String uploadImage(MultipartFile file, String dir) throws IOException {
         return restTemplate.postForObject(
