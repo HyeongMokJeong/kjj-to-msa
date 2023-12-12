@@ -1,4 +1,3 @@
-my:
+kjj:
   client:
-    menu:
-      host: http://menu:50002
+    host: http://client:55555

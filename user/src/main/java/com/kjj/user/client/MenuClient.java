@@ -14,29 +14,20 @@ import java.util.Optional;
 public class MenuClient {
 
     private final RestTemplate restTemplate;
-    @Value("${my.client.menu.host}") private String menuServerHost;
+    private final ClientUriTool uriTool;
 
-    private String getRequestURI(String path, Map<String, String> params) {
-        StringBuilder stringBuilder = new StringBuilder(menuServerHost + path + '?');
-        for (Map.Entry<String, String> entry : params.entrySet()) {
-            stringBuilder.append(String.join("=", entry.getKey(), entry.getValue()));
-            stringBuilder.append("&");
-        }
-        return stringBuilder.toString();
-    }
-
-    public boolean existsById(Long menuId) {
-        String uri = getRequestURI("/v1/menu/exist", Map.of("id", String.valueOf(menuId)));
+    public Boolean existsById(Long menuId) {
+        String uri = uriTool.getRequestURI("/v1/client/menu/exist", Map.of("menuId", String.valueOf(menuId)));
         return restTemplate.getForObject(uri, Boolean.class);
     }
 
     public MenuNameAndCostDto findNameAndCostById(Long menuId) {
-        String uri = getRequestURI("/v1/menu/name-cost", Map.of("id", String.valueOf(menuId)));
+        String uri = uriTool.getRequestURI("/v1/client/menu/name-cost", Map.of("menuId", String.valueOf(menuId)));
         return restTemplate.getForObject(uri, MenuNameAndCostDto.class);
     }
 
     public String findNameById(Long menuId) {
-        String uri = getRequestURI("/v1/menu/name", Map.of("id", String.valueOf(menuId)));
+        String uri = uriTool.getRequestURI("/v1/client/menu/name", Map.of("menuId", String.valueOf(menuId)));
         return restTemplate.getForObject(uri, String.class);
     }
 }
