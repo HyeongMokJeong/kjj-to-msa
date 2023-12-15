@@ -24,7 +24,7 @@ public class CheckJwtFilterFactory extends AbstractGatewayFilterFactory {
         String managerApiPrefix = "/api/manager";
         String userRoles = "ROLE_USER";
         String managerRoles = "ROLE_MANAGER";
-        if (token == null || jwtUtil.isTokenExpired(token)) return false;
+        if (token == null) return false;
 
         // roles 추출
         String roles = jwtUtil.getRolesFromToken(token);
