@@ -10,7 +10,6 @@
 - API를 이용하던 클라이언트의 코드를 수정하지 않고도 동일하게 동작해야 한다.
 
 ## 아키텍처
-<img src="https://github.com/HyeongMokJeong/kjj-to-msa/assets/94634916/32d3c1da-cb67-4106-99e8-b47ae42eee5c"/>
 
 ## 프로젝트 구조
 📦kjj-to-msa  
