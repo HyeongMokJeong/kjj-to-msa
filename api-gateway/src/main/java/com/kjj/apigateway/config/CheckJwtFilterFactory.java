@@ -2,6 +2,7 @@ package com.kjj.apigateway.config;
 
 import com.kjj.apigateway.jwt.JwtUtil;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.HttpHeaders;
@@ -16,6 +17,7 @@ import java.net.URI;
 
 @RequiredArgsConstructor
 @Component
+@Slf4j
 public class CheckJwtFilterFactory extends AbstractGatewayFilterFactory {
 
     private final JwtUtil jwtUtil;
@@ -24,19 +26,35 @@ public class CheckJwtFilterFactory extends AbstractGatewayFilterFactory {
         String managerApiPrefix = "/api/manager";
         String userRoles = "ROLE_USER";
         String managerRoles = "ROLE_MANAGER";
-        if (token == null) return false;
+        if (token == null) {
+            log.info("token is null");
+            return false;
+        }
 
         // roles 추출
         String roles = jwtUtil.getRolesFromToken(token);
 
         // 부족하면 false
-        if (username == null || id == null || roles == null) return false;
+        if (username == null || id == null || roles == null) {
+            log.info("username = {username}");
+            log.info("id = {id}");
+            log.info("roles = {roles}");
+            return false;
+        }
 
         // 권한이 다르면 false
-        if (!roles.equals(managerRoles) && !roles.equals(userRoles)) return false;
+        if (!roles.equals(managerRoles) && !roles.equals(userRoles)) {
+            log.info("roles not match");
+            log.info("roles = {roles}");
+            return false;
+        }
 
         // 권한이 맞지 않으면 false
-        if (uri.startsWith(managerApiPrefix) && !roles.equals(managerRoles)) return false;
+        if (uri.startsWith(managerApiPrefix) && !roles.equals(managerRoles)) {
+            log.info("roles not match");
+            log.info("roles = {roles}");
+            return false;
+        }
 
         return true;
     }
@@ -65,7 +83,8 @@ public class CheckJwtFilterFactory extends AbstractGatewayFilterFactory {
             String token = exchange.getRequest().getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
 
             // 토큰이 만료된 상태라면 401 응답
-            if (!jwtUtil.isTokenExpired(token)) {
+            if (jwtUtil.isTokenExpired(token)) {
+                log.info("token expired");
                 exchange.getResponse().setStatusCode(HttpStatus.UNAUTHORIZED);
                 return exchange.getResponse().setComplete();
             }

@@ -3,7 +3,7 @@ spring:
     gateway:
       routes:
         - id: no-auth-server
-          uri: http://no-auth:60000/
+          uri: lb://NO-AUTH-CLIENT
           predicates:
             - Path=/api/user/login/**, /api/manager/login/**
           filters:
@@ -54,7 +54,7 @@ spring:
             - RewritePath=/api/image(?<remaining>.*), /v1/image$\{remaining}
 
         - id: user-server
-          uri: http://user:50001/
+          uri: lb://USER-CLIENT
           predicates:
             - Path=/api/user/**, /api/manager/**
           filters:
