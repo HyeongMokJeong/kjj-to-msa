@@ -21,6 +21,16 @@ repositories {
     mavenCentral()
 }
 
+ext {
+    set('springCloudVersion', "2022.0.4")
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
 dependencies {
     // spring web
     implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -40,6 +50,9 @@ dependencies {
 
     // keycloak
     implementation 'org.keycloak:keycloak-admin-client:22.0.1'
+
+    // eureka client
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
 }
 
 tasks.named('bootBuildImage') {

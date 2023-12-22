@@ -3,7 +3,10 @@ server:
 
 spring:
   profiles:
-    include: client
+    include: client, eureka
+
+  application:
+    name: planner-client
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -17,3 +20,12 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/kjj_planner?useSSL=false&allowPublicKeyRetrieval=true

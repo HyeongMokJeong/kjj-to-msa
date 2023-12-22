@@ -3,7 +3,8 @@ server:
 
 spring:
   profiles:
-    include: client
+    include: client, eureka
+
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -17,3 +18,14 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
+  application:
+    name: store-client
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/kjj_store?useSSL=false&allowPublicKeyRetrieval=true
