@@ -1,5 +1,5 @@
 kjj:
   client:
-    host: http://client:55555
+    host: http://CLIENT
     image:
-      host: http://image:60001
+      host: http://IMAGE-CLIENT

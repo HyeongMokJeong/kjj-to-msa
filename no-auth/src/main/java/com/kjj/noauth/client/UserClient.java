@@ -35,7 +35,7 @@ public class UserClient {
 
 
     public UserDto findByUsername(String username) {
-        String uri = getRequestURI("/v1/user/info/all", Map.of("username", username));
+        String uri = getRequestURI("/v1/client/user/info/all", Map.of("username", username));
         UserDto userDto = restTemplate.getForObject(uri, UserDto.class);
         if (userDto == null) throw new CantFindByUsernameException("""
                 해당 username을 가진 유저를 찾을 수 없습니다.
@@ -44,27 +44,27 @@ public class UserClient {
     }
 
     public Boolean existsByUsername(String username) {
-        String uri = getRequestURI("/v1/user/exist", Map.of("username", username));
+        String uri = getRequestURI("/v1/client/user/check", Map.of("username", username));
         return restTemplate.getForObject(uri, Boolean.class);
     }
 
     public Boolean join(JoinDto dto) {
-        String uri = getRequestURI("/v1/user/join");
+        String uri = getRequestURI("/v1/client/user/join");
         return restTemplate.postForObject(uri, httpTools.getRequestEntityTypeJson(dto), Boolean.class);
     }
 
     public UserDto joinKeycloak(UserDto dto) {
-        String uri = getRequestURI("/v1/user/join/keycloak");
+        String uri = getRequestURI("/v1/client/user/join/keycloak");
         return restTemplate.postForObject(uri, httpTools.getRequestEntityTypeJson(dto), UserDto.class);
     }
 
     public Boolean withdraw(String username) {
-        String uri = getRequestURI("/v1/user/withdraw", Map.of("username", username));
+        String uri = getRequestURI("/v1/client/user/withdraw", Map.of("username", username));
         return restTemplate.getForObject(uri, Boolean.class);
     }
 
     public Boolean checkPassword(String username, String password) {
-        String uri = getRequestURI("/v1/user/check/password", Map.of("username", username, "password", password));
+        String uri = getRequestURI("/v1/client/user/check/password", Map.of("username", username, "password", password));
         return restTemplate.getForObject(uri, Boolean.class);
     }
 }

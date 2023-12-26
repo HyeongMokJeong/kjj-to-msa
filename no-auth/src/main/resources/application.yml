@@ -1,10 +1,10 @@
 # env
 spring:
   profiles:
-    include: keycloak, client
+    include: keycloak, client, eureka
 
   application:
-    name: kjj-no-auth
+    name: no-auth-client
 
   mvc:
     pathmatch:

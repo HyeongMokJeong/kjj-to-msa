@@ -23,11 +23,11 @@ public class JwtUtil {
     public boolean isTokenExpired(String token) {
         token = token.replace(jwtTemplate.getTokenPrefix(), "");
         try {
-            Date exp = JWT.require(Algorithm.HMAC256(jwtTemplate.getSecret())).build().verify(token).getClaim("exp").asDate();
-            return !exp.before(new Date());
+            JWT.require(Algorithm.HMAC256(jwtTemplate.getSecret())).build().verify(token).getClaim("exp").asDate();
         } catch (TokenExpiredException e) {
             return true;
         }
+        return false;
     }
 
     public String getIdFromToken(String token) {

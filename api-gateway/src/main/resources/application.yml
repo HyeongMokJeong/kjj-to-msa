@@ -1,3 +1,5 @@
 spring:
   profiles:
-    include: gateway
+    include: gateway, eureka
+  application:
+    name: gateway
