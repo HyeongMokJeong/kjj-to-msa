@@ -11,7 +11,7 @@ spring:
             - RewritePath=/api/manager/login(?<remaining>.*), /v1/no-auth$\{remaining}
 
         - id: menu-server
-          uri: http://menu:50002/
+          uri: lb://MENU-CLIENT
           predicates:
             - Path=/api/user/menu/**, /api/manager/menu/**
           filters:
@@ -20,7 +20,7 @@ spring:
             - RewritePath=/api/manager/menu(?<remaining>.*), /v1/menu/manager$\{remaining}
 
         - id: store-server
-          uri: http://store:50003/
+          uri: lb://STORE-CLIENT
           predicates:
             - Path=/api/user/store/**, /api/manager/store/**
           filters:
@@ -29,7 +29,7 @@ spring:
             - RewritePath=/api/manager/store(?<remaining>.*), /v1/store/manager$\{remaining}
 
         - id: calculate-server
-          uri: http://calculate:50004/
+          uri: lb://CALCULATE-CLIENT
           predicates:
             - Path=/api/user/state/**, /api/manager/state/**
           filters:
@@ -38,7 +38,7 @@ spring:
             - RewritePath=/api/manager/state(?<remaining>.*), /v1/state/manager$\{remaining}
 
         - id: planner-server
-          uri: http://planner:50005/
+          uri: lb://PLANNER-CLIENT
           predicates:
             - Path=/api/user/planner/**, /api/manager/planner/**
           filters:
@@ -47,7 +47,7 @@ spring:
             - RewritePath=/api/manager/planner(?<remaining>.*), /v1/planner/manager$\{remaining}
 
         - id: image-server
-          uri: http://image:60001/
+          uri: lb://IMAGE-CLIENT
           predicates:
             - Path=/api/image/**
           filters:

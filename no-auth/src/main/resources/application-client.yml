@@ -1,7 +1,7 @@
 my:
   client:
     user:
-      host: http://user:50001
+      host: http://CLIENT
 
 ---
 spring:

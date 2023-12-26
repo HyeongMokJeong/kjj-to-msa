@@ -1,14 +1,20 @@
+spring:
+  profiles:
+    include: eureka
+  application:
+    name: client
+
 server:
   port: 55555
 
 kjj:
   client:
     order:
-      host: http://user:50001
+      host: http://USER-CLIENT
     user:
-      host: http://user:50001
+      host: http://USER-CLIENT
     menu:
-      host: http://menu:50002
+      host: http://MENU-CLIENT
 ---
 spring:
   config:
