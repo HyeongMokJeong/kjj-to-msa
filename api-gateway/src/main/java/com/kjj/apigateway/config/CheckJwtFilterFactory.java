@@ -3,6 +3,7 @@ package com.kjj.apigateway.config;
 import com.kjj.apigateway.jwt.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MDC;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.HttpHeaders;
@@ -36,23 +37,19 @@ public class CheckJwtFilterFactory extends AbstractGatewayFilterFactory {
 
         // 부족하면 false
         if (username == null || id == null || roles == null) {
-            log.info("username = {username}");
-            log.info("id = {id}");
-            log.info("roles = {roles}");
+            log.info("field is null - username = {username} / id = {id} / roles = {roles}");
             return false;
         }
 
         // 권한이 다르면 false
         if (!roles.equals(managerRoles) && !roles.equals(userRoles)) {
-            log.info("roles not match");
-            log.info("roles = {roles}");
+            log.info("roles not match - roles = {roles}");
             return false;
         }
 
         // 권한이 맞지 않으면 false
         if (uri.startsWith(managerApiPrefix) && !roles.equals(managerRoles)) {
-            log.info("roles not match");
-            log.info("roles = {roles}");
+            log.info("roles not match - roles = {roles}");
             return false;
         }
 

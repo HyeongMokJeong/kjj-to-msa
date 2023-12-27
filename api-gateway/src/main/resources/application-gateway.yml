@@ -61,3 +61,5 @@ spring:
             - name: CheckJwtFilterFactory
             - RewritePath=/api/user(?<remaining>.*), /v1/user$\{remaining}
             - RewritePath=/api/manager(?<remaining>.*), /v1/manager$\{remaining}
+      default-filters:
+        - name: AddIdToHeaderFilter
