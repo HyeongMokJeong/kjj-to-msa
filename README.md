@@ -16,6 +16,7 @@
  ┣ 📂api-gateway : Spring Cloud Gateway 기반 라우팅 서버  
  ┣ 📂calculate : 정산 관련 도메인을 다루는 서버  
  ┣ 📂client : 마이크로 서비스 간 통신을 처리하는 Proxy 서버  
+ ┣ 📂eureka : Eureka 서버  
  ┣ 📂image : 이미지 관련 서비스를 수행하는 서버  
  ┣ 📂menu : 메뉴 관련 도메인을 다루는 서버  
  ┣ 📂no-auth : 로그인, 회원가입 등 JWT 인증이 불필요한 로직을 담당하는 서버  
