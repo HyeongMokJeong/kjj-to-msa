@@ -2,6 +2,9 @@ package com.kjj.menu.entity;
 
 import com.kjj.menu.dto.MenuUpdateDto;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,11 +25,13 @@ public class Menu {
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private MenuFood menuFood;
 
+    @NotBlank
     @org.hibernate.annotations.Index(name = "menu_name_index")
     private String name;
+
     private int cost;
     private String image;
-    private Boolean sold;
+    private boolean sold;
     private boolean usePlanner;
 
     public void patch(MenuUpdateDto dto) {

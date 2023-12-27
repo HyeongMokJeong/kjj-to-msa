@@ -1,6 +1,8 @@
 package com.kjj.menu.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,8 +21,10 @@ public class MenuFood {
     @OneToMany(mappedBy = "menuFood")
     private List<Menu> menu;
 
+    @NotBlank
     private String name;
-
+    @NotBlank
+    @Pattern(regexp = "\\{.*\\}")
     private String food;
 
     public static MenuFood of(String name, String food) {
