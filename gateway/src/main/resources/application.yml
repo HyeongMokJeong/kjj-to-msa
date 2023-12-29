@@ -1,0 +1,5 @@
+spring:
+  profiles:
+    include: gateway, eureka
+  application:
+    name: gateway

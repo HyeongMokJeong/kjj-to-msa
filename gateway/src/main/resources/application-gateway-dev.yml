@@ -1,0 +1,63 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: no-auth-server
+          uri: http://localhost:60000/
+          predicates:
+            - Path=/api/user/login/**, /api/manager/login/**
+          filters:
+            - RewritePath=/api/user/login/(?<remaining>.*), /v1/no-auth/$\{remaining}
+            - RewritePath=/api/manager/login/(?<remaining>.*), /v1/no-auth/$\{remaining}
+
+        - id: user-server
+          uri: http://localhost:50001/
+          predicates:
+            - Path=/api/user/**, /api/manager/**
+          filters:
+            - name: CheckJwtFilterFactory
+            - RewritePath=/api/user/(?<remaining>.*), /v1/user/$\{remaining}
+            - RewritePath=/api/manager/(?<remaining>.*), /v1/manager/$\{remaining}
+
+        - id: menu-server
+          uri: http://localhost:50002/
+          predicates:
+            - Path=/api/user/menu/**, /api/manager/menu/**
+          filters:
+            - name: CheckJwtFilterFactory
+            - RewritePath=/api/user/menu/(?<remaining>.*), /v1/menu/user/$\{remaining}
+            - RewritePath=/api/manager/menu/(?<remaining>.*), /v1/menu/manager/$\{remaining}
+
+        - id: store-server
+          uri: http://localhost:50003/
+          predicates:
+            - Path=/api/user/store/**, /api/manager/store/**
+          filters:
+            - name: CheckJwtFilterFactory
+            - RewritePath=/api/user/store/(?<remaining>.*), /v1/store/user/$\{remaining}
+            - RewritePath=/api/manager/store/(?<remaining>.*), /v1/store/manager/$\{remaining}
+
+        - id: calculate-server
+          uri: http://localhost:50004/
+          predicates:
+            - Path=/api/user/state/**, /api/manager/state/**
+          filters:
+            - name: CheckJwtFilterFactory
+            - RewritePath=/api/user/state/(?<remaining>.*), /v1/state/user/$\{remaining}
+            - RewritePath=/api/manager/state/(?<remaining>.*), /v1/state/manager/$\{remaining}
+
+        - id: planner-server
+          uri: http://localhost:50005/
+          predicates:
+            - Path=/api/user/planner/**, /api/manager/planner/**
+          filters:
+            - name: CheckJwtFilterFactory
+            - RewritePath=/api/user/planner/(?<remaining>.*), /v1/planner/user/$\{remaining}
+            - RewritePath=/api/manager/planner/(?<remaining>.*), /v1/planner/manager/$\{remaining}
+
+        - id: image-server
+          uri: http://localhost:60001/
+          predicates:
+            - Path=/api/image/**
+          filters:
+            - RewritePath=/api/image/(?<remaining>.*), /v1/image/$\{remaining}

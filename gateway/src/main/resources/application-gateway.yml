@@ -1,0 +1,65 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: no-auth-server
+          uri: lb://NO-AUTH-CLIENT
+          predicates:
+            - Path=/api/user/login/**, /api/manager/login/**
+          filters:
+            - RewritePath=/api/user/login(?<remaining>.*), /v1/no-auth$\{remaining}
+            - RewritePath=/api/manager/login(?<remaining>.*), /v1/no-auth$\{remaining}
+
+        - id: menu-server
+          uri: lb://MENU-CLIENT
+          predicates:
+            - Path=/api/user/menu/**, /api/manager/menu/**
+          filters:
+            - name: CheckJwtFilter
+            - RewritePath=/api/user/menu(?<remaining>.*), /v1/menu/user$\{remaining}
+            - RewritePath=/api/manager/menu(?<remaining>.*), /v1/menu/manager$\{remaining}
+
+        - id: store-server
+          uri: lb://STORE-CLIENT
+          predicates:
+            - Path=/api/user/store/**, /api/manager/store/**
+          filters:
+            - name: CheckJwtFilter
+            - RewritePath=/api/user/store(?<remaining>.*), /v1/store/user$\{remaining}
+            - RewritePath=/api/manager/store(?<remaining>.*), /v1/store/manager$\{remaining}
+
+        - id: calculate-server
+          uri: lb://CALCULATE-CLIENT
+          predicates:
+            - Path=/api/user/state/**, /api/manager/state/**
+          filters:
+            - name: CheckJwtFilter
+            - RewritePath=/api/user/state(?<remaining>.*), /v1/state/user$\{remaining}
+            - RewritePath=/api/manager/state(?<remaining>.*), /v1/state/manager$\{remaining}
+
+        - id: planner-server
+          uri: lb://PLANNER-CLIENT
+          predicates:
+            - Path=/api/user/planner/**, /api/manager/planner/**
+          filters:
+            - name: CheckJwtFilter
+            - RewritePath=/api/user/planner(?<remaining>.*), /v1/planner/user$\{remaining}
+            - RewritePath=/api/manager/planner(?<remaining>.*), /v1/planner/manager$\{remaining}
+
+        - id: image-server
+          uri: lb://IMAGE-CLIENT
+          predicates:
+            - Path=/api/image/**
+          filters:
+            - RewritePath=/api/image(?<remaining>.*), /v1/image$\{remaining}
+
+        - id: user-server
+          uri: lb://USER-CLIENT
+          predicates:
+            - Path=/api/user/**, /api/manager/**
+          filters:
+            - name: CheckJwtFilter
+            - RewritePath=/api/user(?<remaining>.*), /v1/user$\{remaining}
+            - RewritePath=/api/manager(?<remaining>.*), /v1/manager$\{remaining}
+      default-filters:
+        - name: AddIdToHeaderFilter
