@@ -13,7 +13,7 @@
 
 ## 프로젝트 구조
 📦kjj-to-msa  
- ┣ 📂api-gateway : Spring Cloud Gateway 기반 라우팅 서버  
+ ┣ 📂gateway : Spring Cloud Gateway 기반 라우팅 서버  
  ┣ 📂calculate : 정산 관련 도메인을 다루는 서버  
  ┣ 📂client : 마이크로 서비스 간 통신을 처리하는 Proxy 서버  
  ┣ 📂eureka : Eureka 서버  
