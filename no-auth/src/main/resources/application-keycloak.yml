@@ -1,4 +1,10 @@
 # Keycloak
+my:
+  keycloak:
+    host: ENC(Sez2UPBOBoqHa+o2Fj6aTkEsZdGNEeokyQV8r4xlw1qCvYg9irj1jw==)
+    realmName: test-app
+    clientId: test-client
+
 keycloak:
   host: ENC(Sez2UPBOBoqHa+o2Fj6aTkEsZdGNEeokyQV8r4xlw1qCvYg9irj1jw==)
   realm: test-app

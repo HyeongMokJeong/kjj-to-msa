@@ -7,7 +7,7 @@ spring:
     name: no-auth-client
 
   mvc:
-    pathmatch:
+    path match:
       matching-strategy: ant_path_matcher
 
 jasypt:
